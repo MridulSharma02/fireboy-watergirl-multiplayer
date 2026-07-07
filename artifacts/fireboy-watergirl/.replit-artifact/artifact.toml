@@ -1,0 +1,27 @@
+kind = "web"
+previewPath = "/"
+title = "Fireboy & Watergirl Multiplayer"
+version = "1.0.0"
+id = "artifacts/fireboy-watergirl"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 22010
+
+[services.development]
+run = "pnpm --filter @workspace/fireboy-watergirl run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/fireboy-watergirl", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/fireboy-watergirl/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "22010"
+BASE_PATH = "/"
